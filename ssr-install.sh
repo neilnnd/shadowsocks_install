@@ -60,29 +60,6 @@ function centosversion(){
     fi        
 }
 
-#安装依赖库
-if [ "$OS" == 'CentOS' ]; then
-	yum install -y wget unzip openssl-devel gcc swig python python-devel python-setuptools autoconf libtool libevent git ntpdate
-	yum install -y m2crypto automake make curl curl-devel zlib-devel perl perl-devel cpio expat-devel gettext-devel
-else
-	apt-get -y update
-	apt-get -y install python python-dev python-pip python-m2crypto curl wget unzip gcc swig automake make perl cpio build-essential git ntpdate
-fi
-
-#安装chacha20的依赖库
-wget -N --no-check-certificate https://raw.githubusercontent.com/91yun/shadowsocks_install/master/libsodium-1.0.12.tar.gz
-tar zfvx libsodium-1.0.12.tar.gz
-cd libsodium-1.0.12
-./configure
-make && make install
-echo "include ld.so.conf.d/*.conf" > /etc/ld.so.conf
-echo "/lib" >> /etc/ld.so.conf
-echo "/usr/lib64" >> /etc/ld.so.conf
-echo "/usr/local/lib" >> /etc/ld.so.conf
-ldconfig
-cd /root/
-rm -rf libsodium-1.0.12.tar.gz libsodium-1.0.12
-
 #git安装ssr
 git clone https://github.com/shadowsocksr/shadowsocksr.git ${ssrdir}
 cd ${ssrdir}
